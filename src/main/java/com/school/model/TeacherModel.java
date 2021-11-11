@@ -14,7 +14,7 @@ public class TeacherModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer teacherCode;
+    private int teacherCode;
     private String documentType;
     private String documentNumber;
     private String name;

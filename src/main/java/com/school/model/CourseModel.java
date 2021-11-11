@@ -15,7 +15,7 @@ public class CourseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer courseCode;
+    private int courseCode;
     private String courseName;
     private String description;
 

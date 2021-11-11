@@ -15,7 +15,7 @@ public class GroupModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer subjectCode;
+    private int subjectCode;
     private Date date;
     private Date hour;
 

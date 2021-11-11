@@ -8,4 +8,8 @@ import java.util.Optional;
 
 @Repository
 public interface IStudentRepository extends JpaRepository<StudentModel, Integer> {
+
+    StudentModel findById(int id);
+
+    StudentModel findBydocumentNumber(String documentNumber);
 }
