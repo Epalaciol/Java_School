@@ -24,6 +24,7 @@ public class StudentModel {
     private String password;
     private String contactNumber;
     private String email;
+    private String hash;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<GroupModel> subjects;

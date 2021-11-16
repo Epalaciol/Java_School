@@ -19,5 +19,5 @@ public interface IStudentPersistence<T> {
 
     void deleteStudentByCode(int studentCode);
 
-    void deleteStudentByDocumentNumber(String studentCode);
+    void deleteStudentByDocumentNumber(String documentNumber);
 }

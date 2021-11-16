@@ -88,8 +88,14 @@ public class StudentServiceImpl implements IStudentService {
         currentStudent.setPassword(futureStudent.getPassword() == null ?
                 currentStudent.getPassword() :
                 futureStudent.getPassword());
-
-
         return currentStudent;
+    }
+
+
+    private String encryptPassword(String password){
+
+        String pwdEncrypt = "";
+
+        return pwdEncrypt;
     }
 }

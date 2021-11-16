@@ -1,5 +1,7 @@
 package com.school.model;
 
+import com.school.dto.StudentDto;
+import com.school.dto.TeacherDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,4 +24,12 @@ public class TeacherModel {
 
     @OneToMany
     private List<GroupModel> groups;
+
+    public TeacherModel(TeacherDto teacherDto, int teacherCode) {
+        this.teacherCode = teacherCode;
+        this.documentType = teacherDto.getDocumentType();
+        this.documentNumber = teacherDto.getDocumentNumber();
+        this.name = teacherDto.getName();
+        this.email = teacherDto.getEmail();
+    }
 }

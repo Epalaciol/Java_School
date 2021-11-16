@@ -1,0 +1,88 @@
+package com.school.service.impl;
+
+
+import com.school.dto.TeacherDto;
+import com.school.model.StudentModel;
+import com.school.model.TeacherModel;
+import com.school.persistence.ITeacherPersistence;
+import com.school.service.ITeacherService;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.UUID;
+
+@NoArgsConstructor
+@Service
+public class TeacherServiceImpl implements ITeacherService {
+
+    @Autowired
+    ITeacherPersistence teacherPersistence;
+
+
+    @Override
+    public Object create(TeacherDto teacher) {
+
+        int code = (int) UUID.randomUUID().hashCode();
+        TeacherModel teacherModel= new TeacherModel(teacher, code);
+        teacherPersistence.create(teacherModel);
+        return teacherModel;
+    }
+
+    @Override
+    public Collection getAll() {
+        return teacherPersistence.getAll();
+    }
+
+    @Override
+    public Object getByCode(Integer teacherCode) {
+        return teacherPersistence.getByCode(teacherCode);
+    }
+
+    @Override
+    public Object getByDocumentNumber(String documentNumber) {
+        return teacherPersistence.getByDocumentNumber(documentNumber);
+    }
+
+    @Override
+    public void update(TeacherDto teacher, int teacherCode) {
+
+        TeacherModel teacherModel = (TeacherModel) getByCode(teacherCode);
+        TeacherModel teacherToChange = createTeacherToUpdate(teacherModel, teacher);
+        teacherPersistence.update(teacherToChange);
+
+    }
+
+    @Override
+    public void deleteByCode(Integer teacherCode) {
+
+        teacherPersistence.deleteByCode(teacherCode);
+
+    }
+
+    @Override
+    public void deleteByDocumentNumber(String documentNumber) {
+
+        teacherPersistence.deleteByDocumentNumber(documentNumber);
+
+    }
+
+    private TeacherModel createTeacherToUpdate(TeacherModel currentTeacher, TeacherDto futureTeacher){
+
+        currentTeacher.setName(futureTeacher.getName() == null ?
+                currentTeacher.getName() :
+                futureTeacher.getName());
+        currentTeacher.setDocumentNumber(futureTeacher.getDocumentNumber() == null ?
+                currentTeacher.getDocumentNumber() :
+                futureTeacher.getDocumentNumber());
+        currentTeacher.setDocumentType(futureTeacher.getDocumentType() == null ?
+                currentTeacher.getDocumentType() :
+                futureTeacher.getDocumentType());
+        currentTeacher.setEmail(futureTeacher.getEmail() == null ?
+                currentTeacher.getEmail() :
+                futureTeacher.getEmail());
+
+        return currentTeacher;
+    }
+}
