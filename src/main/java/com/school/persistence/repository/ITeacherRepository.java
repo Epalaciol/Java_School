@@ -1,6 +1,5 @@
 package com.school.persistence.repository;
 
-import com.school.model.StudentModel;
 import com.school.model.TeacherModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -13,10 +13,13 @@ import java.io.Serializable;
 @Setter
 public class TeacherDto implements Serializable {
 
-    private int teacherCode;
     private String documentType;
     private String documentNumber;
     private String name;
     private String email;
+
+    // Should implement a list to receive groups
+    // groups must exists before assignation
+
 
 }

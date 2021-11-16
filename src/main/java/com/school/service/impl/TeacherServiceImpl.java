@@ -18,16 +18,14 @@ import java.util.UUID;
 public class TeacherServiceImpl implements ITeacherService {
 
     @Autowired
-    ITeacherPersistence teacherPersistence;
+    private ITeacherPersistence teacherPersistence;
 
 
     @Override
     public Object create(TeacherDto teacher) {
-
         int code = (int) UUID.randomUUID().hashCode();
         TeacherModel teacherModel= new TeacherModel(teacher, code);
-        teacherPersistence.create(teacherModel);
-        return teacherModel;
+        return  teacherPersistence.create(teacherModel);
     }
 
     @Override

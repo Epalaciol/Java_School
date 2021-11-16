@@ -2,11 +2,11 @@ package com.school.controller;
 
 
 import com.school.dto.TeacherDto;
-import com.school.service.IStudentService;
 import com.school.service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,16 +18,7 @@ public class TeacherRestController {
     private ITeacherService teacherService;
 
     @GetMapping("")
-    public ResponseEntity<?> getAllStudents() throws Exception {
-        try {
-            return new ResponseEntity<>(teacherService.getAll(), HttpStatus.ACCEPTED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(teacherService.getAll(), HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<?> getAllStudentsTest() throws Exception {
+    public ResponseEntity<?> getAllTeachers() throws Exception {
         try {
             return new ResponseEntity<>(teacherService.getAll(), HttpStatus.ACCEPTED);
         } catch (Exception e) {
@@ -36,7 +27,7 @@ public class TeacherRestController {
     }
 
     @GetMapping("/code={teacherCode}")
-    public ResponseEntity<?> getStudentByCode(@PathVariable int teacherCode) {
+    public ResponseEntity<?> getTeacherByCode(@PathVariable int teacherCode) {
 
         try {
             Object student =  teacherService.getByCode(teacherCode );
@@ -48,7 +39,7 @@ public class TeacherRestController {
     }
 
     @GetMapping("/document={documentNumber}")
-    public ResponseEntity<?> getStudentByDocumentNumber(@PathVariable String documentNumber) {
+    public ResponseEntity<?> getTeacherByDocumentNumber(@PathVariable String documentNumber) {
 
         try {
             Object student =  teacherService.getByDocumentNumber(documentNumber);
@@ -60,18 +51,18 @@ public class TeacherRestController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createStudent(@RequestBody TeacherDto teacherDto){
+    public ResponseEntity<?> createTeacher(@RequestBody TeacherDto teacherDto) throws  Exception{
         try {
             teacherService.create(teacherDto);
-            return new ResponseEntity<>("Student " + teacherDto.getName() + " create.", HttpStatus.CREATED);
+            return new ResponseEntity<>("Teacher " + teacherDto.getName() + " create.", HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>("User not Created", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Teacher not Created "+ e.getMessage() , HttpStatus.CONFLICT);
 
         }
     }
 
     @PutMapping("/{teacherCode}")
-    public ResponseEntity<?> updateStudent(@RequestBody TeacherDto teacherDto, @PathVariable Integer teacherCode){
+    public ResponseEntity<?> updateTeacher(@RequestBody TeacherDto teacherDto, @PathVariable Integer teacherCode){
         try {
             teacherService.update(teacherDto , teacherCode );
             return new ResponseEntity<>("Student " + teacherDto.getName() + " update.", HttpStatus.CREATED);
@@ -82,7 +73,7 @@ public class TeacherRestController {
     }
 
     @DeleteMapping("/code={teacherCode}")
-    public ResponseEntity<?> deleteStudentByCode(@PathVariable Integer teacherCode){
+    public ResponseEntity<?> deleteTeacherByCode(@PathVariable Integer teacherCode){
         try {
             teacherService.deleteByCode(teacherCode);
             return new ResponseEntity<>("Student deleted", HttpStatus.CREATED);
@@ -93,7 +84,7 @@ public class TeacherRestController {
     }
 
     @DeleteMapping("/document={documentNumber}")
-    public ResponseEntity<?> deleteStudentByDocumentNumber(@PathVariable String documentNumber){
+    public ResponseEntity<?> deleteTeacherByDocumentNumber(@PathVariable String documentNumber){
         try {
             teacherService.deleteByDocumentNumber(documentNumber);
             return new ResponseEntity<>("Student deleted", HttpStatus.CREATED);

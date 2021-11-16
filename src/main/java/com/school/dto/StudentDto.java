@@ -19,4 +19,8 @@ public class StudentDto implements Serializable {
     private String password;
     private String contactNumber;
     private String email;
+
+
+    // Should implement a list to receive groups
+    // groups must exists before assignation
 }

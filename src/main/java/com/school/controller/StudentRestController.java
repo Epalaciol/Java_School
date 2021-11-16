@@ -1,15 +1,12 @@
 package com.school.controller;
 
 import com.school.dto.StudentDto;
-import com.school.model.StudentModel;
 import com.school.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Objects;
-import java.util.Optional;
 
 
 @RestController
@@ -22,15 +19,6 @@ public class StudentRestController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllStudents() throws Exception {
-        try {
-            return new ResponseEntity<>(studentService.getAll(), HttpStatus.ACCEPTED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(studentService.getAll(), HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<?> getAllStudentsTest() throws Exception {
         try {
             return new ResponseEntity<>(studentService.getAll(), HttpStatus.ACCEPTED);
         } catch (Exception e) {
