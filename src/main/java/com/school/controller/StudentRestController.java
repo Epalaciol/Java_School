@@ -1,6 +1,8 @@
 package com.school.controller;
 
 import com.school.dto.StudentDto;
+import com.school.model.StudentModel;
+import com.school.security.PasswordUtils;
 import com.school.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -94,6 +96,28 @@ public class StudentRestController {
         }
     }
 
+    @PostMapping("/testPwd")
+    public ResponseEntity<?> test(@RequestParam("user") Integer studentCode, @RequestParam("password") String pwd) {
+
+        try {
+            StudentModel student = (StudentModel) studentService.getByCode(studentCode );
+            String passWord = student.getPassword();
+            String salt = student.getHash();
+
+            boolean pwdMatch = PasswordUtils.verifyUserPassword(pwd, passWord, salt);
+
+            if( pwdMatch){
+                return  new ResponseEntity<>(" La contrasena ingresada si es correcta", HttpStatus.OK);
+            } else {
+                return  new ResponseEntity<>(" La contrasena ingresada no es correcta", HttpStatus.CONFLICT);
+
+            }
 
 
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+
+        }
+    }
 }

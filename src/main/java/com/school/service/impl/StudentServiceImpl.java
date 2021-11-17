@@ -3,14 +3,13 @@ package com.school.service.impl;
 import com.school.dto.StudentDto;
 import com.school.model.StudentModel;
 import com.school.persistence.IStudentPersistence;
+import com.school.security.PasswordUtils;
 import com.school.service.IStudentService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -24,7 +23,8 @@ public class StudentServiceImpl implements IStudentService {
     public Object create(StudentDto student) {
 
         int code = (int) UUID.randomUUID().hashCode();
-        StudentModel studentModel = new StudentModel(student, code);
+        String[] passwordEncoded = encryptPassword(student.getPassword());
+        StudentModel studentModel = new StudentModel(student, code, passwordEncoded[0], passwordEncoded[1]);
         studentPersistence.createStudent(studentModel);
         return studentModel;
     }
@@ -51,7 +51,6 @@ public class StudentServiceImpl implements IStudentService {
         StudentModel studentModel = (StudentModel) getByCode(studentCode);
         StudentModel studentToChange = createStudentToUpdate(studentModel, student);
         studentPersistence.updateStudent(studentToChange);
-
     }
 
     @Override
@@ -65,8 +64,6 @@ public class StudentServiceImpl implements IStudentService {
 
         studentPersistence.deleteStudentByDocumentNumber(documentNumber);
     }
-
-
 
     private StudentModel createStudentToUpdate(StudentModel currentStudent, StudentDto futureStudent) {
 
@@ -92,10 +89,11 @@ public class StudentServiceImpl implements IStudentService {
     }
 
 
-    private String encryptPassword(String password){
+    private String[] encryptPassword(String password){
 
-        String pwdEncrypt = "";
+        String salt = PasswordUtils.getSalt(30);
+        String mySecurePassword = PasswordUtils.generateSecurePassword(password, salt);
 
-        return pwdEncrypt;
+        return new String[]{salt, mySecurePassword};
     }
 }

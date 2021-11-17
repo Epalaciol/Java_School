@@ -19,7 +19,7 @@ public class GroupModel {
     private Date date;
     private Date hour;
 
-    @ManyToMany(mappedBy = "subjects", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<StudentModel> students;
 
     @ManyToOne

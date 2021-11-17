@@ -27,17 +27,18 @@ public class StudentModel {
     private String hash;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<GroupModel> subjects;
+    private List<GroupModel> groups;
 
 
-    public StudentModel(StudentDto studentDto, int studentCode) {
+    public StudentModel(StudentDto studentDto, int studentCode, String hash , String passwordEncoded) {
         this.studentCode = studentCode;
         this.documentType = studentDto.getDocumentType();
         this.documentNumber = studentDto.getDocumentNumber();
         this.name = studentDto.getName();
-        this.password = studentDto.getPassword();
+        this.password = passwordEncoded;
         this.contactNumber = studentDto.getContactNumber();
         this.email = studentDto.getEmail();
+        this.hash = hash;
     }
 }
 
