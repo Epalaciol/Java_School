@@ -19,15 +19,19 @@ public class StudentModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int studentCode;
     private String documentType;
+
+    @Column(unique = true)
     private String documentNumber;
     private String name;
     private String password;
+
     private String contactNumber;
+    @Column(unique = true)
     private String email;
     private String hash;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<GroupModel> groups;
+//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<GroupModel> groups;
 
 
     public StudentModel(StudentDto studentDto, int studentCode, String hash , String passwordEncoded) {

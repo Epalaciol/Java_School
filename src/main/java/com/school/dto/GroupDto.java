@@ -14,8 +14,8 @@ import java.util.Date;
 @Setter
 public class GroupDto implements Serializable {
 
-    private int subjectCode;
-    private Date date;
-    private Date hour;
+    private String date;
+    private String hour;
+    private Integer courseCode;
 
 }

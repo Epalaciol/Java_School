@@ -11,3 +11,5 @@ services:
 #        - DATABASE_PASSWORD=e9cccf032f934b10fda97f7fc39db84a0eb1b0ff4e43855273967a574d58e19c
 #        - DATABASE_NAME=d1c1btpold2n1q
 #        - DATABASE_PORT=5432
+#        - SECURITY_USER=admin
+#        - SECURITY_PASSWORD=admin

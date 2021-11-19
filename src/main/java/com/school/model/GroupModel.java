@@ -1,12 +1,16 @@
 package com.school.model;
 
+import com.school.dto.GroupDto;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Getter
 @Setter
@@ -15,18 +19,27 @@ public class GroupModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int subjectCode;
-    private Date date;
-    private Date hour;
+    private int groupCode;
+    private String date;
+    private String hour;
 
-    @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<StudentModel> students;
+//    @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<StudentModel> students;
 
-    @ManyToOne
-    private  CourseModel course;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "courseCode")
+    private CourseModel course;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "teacherCode")
     private TeacherModel teacher;
+
+    public GroupModel(GroupDto groupDto, int groupCode){
+
+//        this.groupCode = groupCode;
+        this.date = groupDto.getDate();
+        this.hour = groupDto.getHour();
+    }
 
 
 

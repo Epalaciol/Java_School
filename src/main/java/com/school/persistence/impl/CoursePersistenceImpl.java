@@ -21,7 +21,7 @@ public class CoursePersistenceImpl implements ICoursePersistence {
         try {
             return courseRepository.save(course);
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(e.getMessage());
         }
     }
 
@@ -31,17 +31,17 @@ public class CoursePersistenceImpl implements ICoursePersistence {
             if (courseRepository.count() > 0)
                 return courseRepository.findAll();
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet");
+            throw new UnsupportedOperationException(e.getMessage());
         }
         return courseRepository.findAll();
     }
 
     @Override
-    public Object getByCode(Integer courseCode) {
+    public Object getByCode(int courseCode) {
         try {
             return courseRepository.findById(courseCode);
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet");
+            throw new UnsupportedOperationException(e.getMessage());
         }
     }
 
@@ -50,7 +50,7 @@ public class CoursePersistenceImpl implements ICoursePersistence {
         try {
             return courseRepository.findByCourseNameContaining(name);
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet");
+            throw new UnsupportedOperationException(e.getMessage());
         }
     }
 
@@ -59,7 +59,7 @@ public class CoursePersistenceImpl implements ICoursePersistence {
         try {
             courseRepository.save(course);
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(e.getMessage());
         }
 
     }
@@ -69,7 +69,7 @@ public class CoursePersistenceImpl implements ICoursePersistence {
         try {
             courseRepository.deleteById(courseCode);
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(e.getMessage());
         }
     }
 }

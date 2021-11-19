@@ -10,7 +10,7 @@ public interface IGroupPersistence<T> {
 
     Collection<T> getAll();
 
-    T getByCode(Integer groupCode);
+    T getByCode(int groupCode);
 
     void update(GroupModel group, int groupCode);
 

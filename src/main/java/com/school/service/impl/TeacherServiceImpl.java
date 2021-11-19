@@ -2,7 +2,6 @@ package com.school.service.impl;
 
 
 import com.school.dto.TeacherDto;
-import com.school.model.StudentModel;
 import com.school.model.TeacherModel;
 import com.school.persistence.ITeacherPersistence;
 import com.school.service.ITeacherService;
@@ -48,7 +47,7 @@ public class TeacherServiceImpl implements ITeacherService {
 
         TeacherModel teacherModel = (TeacherModel) getByCode(teacherCode);
         TeacherModel teacherToChange = createTeacherToUpdate(teacherModel, teacher);
-        teacherPersistence.update(teacherToChange);
+        teacherPersistence.update(teacherToChange, teacherModel.getTeacherCode());
 
     }
 

@@ -11,7 +11,7 @@ public interface ICoursePersistence<T> {
 
     Collection<T> getAll();
 
-    T getByCode(Integer courseCode);
+    T getByCode(int courseCode);
 
     Collection<T> getByName(String name);
 

@@ -14,7 +14,7 @@ public interface ITeacherPersistence<T> {
 
     T getByDocumentNumber(String documentNumber);
 
-    void update(TeacherModel teacher);
+    void update(TeacherModel teacher, int teacherCode);
 
     void deleteByCode(int teacherCode);
 

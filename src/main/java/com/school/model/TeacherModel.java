@@ -1,6 +1,5 @@
 package com.school.model;
 
-import com.school.dto.StudentDto;
 import com.school.dto.TeacherDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,8 +23,8 @@ public class TeacherModel {
     private String name;
     private String email;
 
-    @OneToMany
-    private List<GroupModel> groups;
+//    @OneToMany(cascade = CascadeType.REMOVE,orphanRemoval=true)
+//    private List<GroupModel> groups;
 
     public TeacherModel(TeacherDto teacherDto, int teacherCode) {
         this.teacherCode = teacherCode;

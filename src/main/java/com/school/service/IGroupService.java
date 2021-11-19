@@ -10,10 +10,11 @@ public interface IGroupService<T> {
 
     Collection<T> getAll();
 
-    T getByCode(Integer groupCode);
+    T getByCode(int groupCode);
 
     void update(GroupDto group, int groupCode);
 
     void deleteByCode(Integer groupCode);
 
+    void assignTeacher(int groupCode, int teacherCode);
 }

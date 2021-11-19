@@ -1,6 +1,5 @@
 package com.school.persistence.impl;
 
-import com.school.model.StudentModel;
 import com.school.model.TeacherModel;
 import com.school.persistence.ITeacherPersistence;
 import com.school.persistence.repository.ITeacherRepository;
@@ -57,7 +56,7 @@ public class TeacherPersistenceImpl implements ITeacherPersistence {
     }
 
     @Override
-    public void update(TeacherModel teacher) {
+    public void update(TeacherModel teacher, int teacherCode) {
         try {
             teacherRepository.save(teacher);
         } catch (Exception e) {
