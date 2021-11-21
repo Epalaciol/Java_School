@@ -17,4 +17,6 @@ public interface IGroupService<T> {
     void deleteByCode(Integer groupCode);
 
     void assignTeacher(int groupCode, int teacherCode);
+
+    void assignStudent(int groupCode, int studentCode);
 }

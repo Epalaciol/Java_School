@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @NoArgsConstructor
@@ -14,12 +16,12 @@ import java.io.Serializable;
 public class TeacherDto implements Serializable {
 
     private String documentType;
+    @Size(min=2, max=30)
     private String documentNumber;
+    @Size(min=2, max=30)
     private String name;
+    @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+[\\.[A-Za-z0-9_-]+]*@[^-][A-Za-z0-9-]+[\\.[A-Za-z0-9-]+]*(\\.[A-Za-z]{2,})$")
     private String email;
-
-    // Should implement a list to receive groups
-    // groups must exists before assignation
 
 
 }

@@ -21,7 +21,7 @@ public class StudentPersistenceImpl implements IStudentPersistence {
         try {
             return studentRepository.save(student);
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(e.getMessage());
         }
     }
 

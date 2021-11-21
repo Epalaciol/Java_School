@@ -3,9 +3,11 @@ package com.school.service.impl;
 import com.school.dto.GroupDto;
 import com.school.model.CourseModel;
 import com.school.model.GroupModel;
+import com.school.model.StudentModel;
 import com.school.model.TeacherModel;
 import com.school.persistence.ICoursePersistence;
 import com.school.persistence.IGroupPersistence;
+import com.school.persistence.IStudentPersistence;
 import com.school.persistence.ITeacherPersistence;
 import com.school.service.IGroupService;
 import lombok.NoArgsConstructor;
@@ -13,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.UUID;
+
 
 @NoArgsConstructor
 @Service
@@ -28,13 +30,19 @@ public class GroupServiceImpl implements IGroupService {
     @Autowired
     private ITeacherPersistence teacherPersistence;
 
+    @Autowired
+    private IStudentPersistence studentPersistence;
+
 
     @Override
     public Object create(GroupDto group) {
 
-        int code = (int) UUID.randomUUID().hashCode();
-        GroupModel groupModel = new GroupModel(group, code);
-        groupModel  = assignGroupToCourse(groupModel, group.getCourseCode());
+        GroupModel groupModel = assignGroupToCourse(
+                new GroupModel(group), group.getCourseCode());
+
+        if ( groupModel.getCourse() == null)
+            throw new UnsupportedOperationException("Not able to create");
+
         return groupPersistence.create(groupModel);
     }
 
@@ -73,7 +81,19 @@ public class GroupServiceImpl implements IGroupService {
         }catch (Exception e){
             throw new UnsupportedOperationException(e.getMessage());
         }
+    }
 
+    @Override
+    public void assignStudent(int groupCode, int studentCode) {
+
+        try {
+            StudentModel studentModel = (StudentModel) studentPersistence.getStudentByCode(studentCode);
+            GroupModel groupModel = (GroupModel) getByCode(groupCode);
+            groupModel.getStudents().add(studentModel);
+            groupPersistence.update(groupModel, groupModel.getGroupCode());
+        }catch (Exception e){
+            throw new UnsupportedOperationException(e.getMessage());
+        }
     }
 
 
@@ -94,6 +114,7 @@ public class GroupServiceImpl implements IGroupService {
             CourseModel course = (CourseModel) coursePersistence.getByCode(courseCode);
             groupModel.setCourse(course);
             return groupModel;
+
         }catch (Exception e){
             throw new UnsupportedOperationException(e.getMessage());
         }

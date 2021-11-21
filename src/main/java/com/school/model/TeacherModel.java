@@ -19,8 +19,12 @@ public class TeacherModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int teacherCode;
     private String documentType;
+
+    @Column(unique = true)
     private String documentNumber;
     private String name;
+
+    @Column(unique = true)
     private String email;
 
 //    @OneToMany(cascade = CascadeType.REMOVE,orphanRemoval=true)

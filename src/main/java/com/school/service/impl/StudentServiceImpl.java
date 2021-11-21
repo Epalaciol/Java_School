@@ -22,7 +22,7 @@ public class StudentServiceImpl implements IStudentService {
     @Override
     public Object create(StudentDto student) {
 
-        int code = (int) UUID.randomUUID().hashCode();
+        int code = UUID.randomUUID().hashCode();
         String[] passwordEncoded = encryptPassword(student.getPassword());
         StudentModel studentModel = new StudentModel(student, code, passwordEncoded[0], passwordEncoded[1]);
         studentPersistence.createStudent(studentModel);

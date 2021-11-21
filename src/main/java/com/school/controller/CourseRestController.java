@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/courses")
@@ -49,7 +51,7 @@ public class CourseRestController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createTeacher(@RequestBody CourseDto courseDto) throws  Exception{
+    public ResponseEntity<?> createTeacher(@Valid @RequestBody CourseDto courseDto) throws  Exception{
         try {
             courseService.create(courseDto);
             return new ResponseEntity<>("Teacher " + courseDto.getCourseName() + " create.", HttpStatus.CREATED);
@@ -60,7 +62,7 @@ public class CourseRestController {
     }
 
     @PutMapping("/{courseCode}")
-    public ResponseEntity<?> updateTeacher(@RequestBody CourseDto courseDto, @PathVariable Integer courseCode){
+    public ResponseEntity<?> updateTeacher(@Valid @RequestBody CourseDto courseDto, @PathVariable Integer courseCode){
         try {
             courseService.update(courseDto , courseCode );
             return new ResponseEntity<>("Student " + courseDto.getCourseName() + " update.", HttpStatus.CREATED);

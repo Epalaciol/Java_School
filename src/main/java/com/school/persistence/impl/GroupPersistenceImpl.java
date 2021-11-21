@@ -50,7 +50,7 @@ public class GroupPersistenceImpl implements IGroupPersistence {
         try {
             groupRepository.save(group);
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(e.getMessage());
         }
     }
 

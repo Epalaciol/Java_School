@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -53,18 +55,18 @@ public class StudentRestController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createStudent(@RequestBody StudentDto studentDto){
+    public ResponseEntity<?> createStudent(@Valid @RequestBody StudentDto studentDto){
         try {
             studentService.create(studentDto);
             return new ResponseEntity<>("Student " + studentDto.getName() + " create.", HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>("User not Created", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("User not Created " + e.getMessage(), HttpStatus.CONFLICT);
 
         }
     }
 
     @PutMapping("/{studentCode}")
-    public ResponseEntity<?> updateStudent(@RequestBody StudentDto studentDto, @PathVariable Integer studentCode){
+    public ResponseEntity<?> updateStudent(@Valid @RequestBody StudentDto studentDto, @PathVariable Integer studentCode){
         try {
             studentService.update(studentDto , studentCode );
             return new ResponseEntity<>("Student " + studentDto.getName() + " update.", HttpStatus.CREATED);
@@ -112,8 +114,6 @@ public class StudentRestController {
                 return  new ResponseEntity<>(" La contrasena ingresada no es correcta", HttpStatus.CONFLICT);
 
             }
-
-
 
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);

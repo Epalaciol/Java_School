@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/groups")
@@ -37,9 +39,9 @@ public class GroupRestController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createGroup(@RequestBody GroupDto groupDto) throws  Exception{
+    public ResponseEntity<?> createGroup(@Valid @RequestBody GroupDto groupDto) throws  Exception{
         try {
-            Object o = groupService.create(groupDto);
+            groupService.create(groupDto);
             return new ResponseEntity<>("Group created", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("Group not Created "+ e.getMessage() , HttpStatus.CONFLICT);
@@ -48,7 +50,7 @@ public class GroupRestController {
     }
 
     @PutMapping("/{groupCode}")
-    public ResponseEntity<?> updateGroup(@RequestBody GroupDto groupDto, @PathVariable Integer groupCode){
+    public ResponseEntity<?> updateGroup(@Valid @RequestBody GroupDto groupDto, @PathVariable Integer groupCode){
         try {
             groupService.update(groupDto , groupCode );
             return new ResponseEntity<>("Group update.", HttpStatus.CREATED);
@@ -69,10 +71,21 @@ public class GroupRestController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<?> assignTeacher(@RequestParam("teacher") int teacherCode, @RequestParam("group") int groupCode) {
+    @PostMapping("/assignTeacher")
+    public ResponseEntity<?> assignTeacher( @RequestParam("group") int groupCode, @RequestParam("teacher") int teacherCode)  throws  Exception {
         try {
-            groupService.assignTeacher(teacherCode, groupCode);
+            groupService.assignTeacher(groupCode, teacherCode);
+            return new ResponseEntity<>("Teacher assinged succesfully ", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+
+        }
+    }
+
+    @PostMapping("/assignStudent")
+    public ResponseEntity<?> assignStudent( @RequestParam("group") int groupCode, @RequestParam("student") int studentCode)  throws  Exception {
+        try {
+            groupService.assignStudent(groupCode, studentCode);
             return new ResponseEntity<>("Teacher assinged succesfully ", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);

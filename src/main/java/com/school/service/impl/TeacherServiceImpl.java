@@ -22,7 +22,7 @@ public class TeacherServiceImpl implements ITeacherService {
 
     @Override
     public Object create(TeacherDto teacher) {
-        int code = (int) UUID.randomUUID().hashCode();
+        int code = UUID.randomUUID().hashCode();
         TeacherModel teacherModel= new TeacherModel(teacher, code);
         return  teacherPersistence.create(teacherModel);
     }

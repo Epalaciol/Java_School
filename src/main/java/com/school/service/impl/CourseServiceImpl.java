@@ -1,9 +1,7 @@
 package com.school.service.impl;
 
 import com.school.dto.CourseDto;
-import com.school.dto.CourseDto;
 import com.school.model.CourseModel;
-import com.school.model.TeacherModel;
 import com.school.persistence.ICoursePersistence;
 import com.school.service.ICourseService;
 import lombok.NoArgsConstructor;
@@ -23,7 +21,10 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     public Object create(CourseDto course) {
 
-        int code = (int) UUID.randomUUID().hashCode();
+        int code = UUID.randomUUID().hashCode();
+        course.setCourseName(
+                nameTransformation(course.getCourseName())
+        );
         CourseModel courseModel= new CourseModel(course, code);
         return  coursePersistence.create(courseModel);
     }
@@ -68,5 +69,10 @@ public class CourseServiceImpl implements ICourseService {
 
 
         return currentCourse;
+    }
+
+    private String  nameTransformation(String text ){
+
+        return  text.toLowerCase().replaceAll("\\s", "_");
     }
 }

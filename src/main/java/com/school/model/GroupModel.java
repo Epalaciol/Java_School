@@ -23,8 +23,8 @@ public class GroupModel {
     private String date;
     private String hour;
 
-//    @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<StudentModel> students;
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<StudentModel> students;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "courseCode")
@@ -34,9 +34,9 @@ public class GroupModel {
     @JoinColumn(name = "teacherCode")
     private TeacherModel teacher;
 
-    public GroupModel(GroupDto groupDto, int groupCode){
+    public GroupModel(GroupDto groupDto){
 
-//        this.groupCode = groupCode;
+
         this.date = groupDto.getDate();
         this.hour = groupDto.getHour();
     }

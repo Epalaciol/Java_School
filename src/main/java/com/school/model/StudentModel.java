@@ -1,5 +1,6 @@
 package com.school.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.school.dto.StudentDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,11 +24,15 @@ public class StudentModel {
     @Column(unique = true)
     private String documentNumber;
     private String name;
-    private String password;
 
+    @JsonIgnore
+    private String password;
     private String contactNumber;
+
     @Column(unique = true)
     private String email;
+
+    @JsonIgnore
     private String hash;
 
 //    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
