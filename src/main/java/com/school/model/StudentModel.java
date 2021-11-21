@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -35,12 +34,7 @@ public class StudentModel {
     @JsonIgnore
     private String hash;
 
-//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<GroupModel> groups;
-
-
-    public StudentModel(StudentDto studentDto, int studentCode, String hash , String passwordEncoded) {
-        this.studentCode = studentCode;
+    public StudentModel(StudentDto studentDto,  String hash , String passwordEncoded) {
         this.documentType = studentDto.getDocumentType();
         this.documentNumber = studentDto.getDocumentNumber();
         this.name = studentDto.getName();

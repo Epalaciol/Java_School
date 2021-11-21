@@ -47,8 +47,8 @@ public class GroupServiceImpl implements IGroupService {
     }
 
     @Override
-    public Collection getAll() {
-        return groupPersistence.getAll();
+    public Collection getAll(int pageNo, int pageSize, String sortBy) {
+        return groupPersistence.getAll(pageNo,pageSize,sortBy);
     }
 
     @Override

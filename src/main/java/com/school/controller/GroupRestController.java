@@ -18,11 +18,14 @@ public class GroupRestController {
     private IGroupService groupService;
 
     @GetMapping("")
-    public ResponseEntity<?> getAllGroups() throws Exception {
+    public ResponseEntity<?> getAllGroups(
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "5") Integer pageSize,
+            @RequestParam(defaultValue = "groupCode") String sortBy) throws Exception {
         try {
-            return new ResponseEntity<>(groupService.getAll(), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(groupService.getAll(pageNo,pageSize, sortBy), HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            return new ResponseEntity<>(groupService.getAll(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(groupService.getAll(pageNo,pageSize, sortBy), HttpStatus.NOT_FOUND);
         }
     }
 

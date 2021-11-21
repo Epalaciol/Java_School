@@ -5,6 +5,9 @@ import com.school.persistence.IGroupPersistence;
 import com.school.persistence.repository.IGroupRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -26,14 +29,16 @@ public class GroupPersistenceImpl implements IGroupPersistence {
     }
 
     @Override
-    public Collection getAll() {
+    public Collection getAll(int pageNo, int pageSize, String sortBy) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
         try {
             if (groupRepository.count() > 0)
-                return groupRepository.findAll();
+                return groupRepository.findAll(paging).getContent();
         } catch (Exception e) {
             throw new UnsupportedOperationException("Not supported yet");
         }
-        return groupRepository.findAll();
+        return groupRepository.findAll(paging).getContent();
     }
 
     @Override

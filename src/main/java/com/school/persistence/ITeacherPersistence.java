@@ -8,7 +8,7 @@ public interface ITeacherPersistence<T> {
 
     T create(TeacherModel teacher);
 
-    Collection<T> getAll();
+    Collection<T> getAll(int pageNo, int pageSize, String sortBy);
 
     T getByCode( int teacherCode);
 

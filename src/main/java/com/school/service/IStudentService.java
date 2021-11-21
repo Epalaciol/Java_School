@@ -1,16 +1,14 @@
 package com.school.service;
 
 import com.school.dto.StudentDto;
-import com.school.model.StudentModel;
 
 import java.util.Collection;
-import java.util.Optional;
 
 public interface IStudentService<T> {
 
     T  create(StudentDto student);
 
-    Collection<T> getAll();
+    Collection<T> getAll(int pageNo, int pageSize, String sortBy);
 
     T getByCode(Integer studentCode);
 

@@ -20,11 +20,14 @@ public class TeacherRestController {
     private ITeacherService teacherService;
 
     @GetMapping("")
-    public ResponseEntity<?> getAllTeachers() throws Exception {
+    public ResponseEntity<?> getAllTeachers(
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "5") Integer pageSize,
+            @RequestParam(defaultValue = "teacherCode") String sortBy) throws Exception {
         try {
-            return new ResponseEntity<>(teacherService.getAll(), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(teacherService.getAll(pageNo,pageSize, sortBy), HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            return new ResponseEntity<>(teacherService.getAll(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(teacherService.getAll(pageNo,pageSize, sortBy), HttpStatus.NOT_FOUND);
         }
     }
 

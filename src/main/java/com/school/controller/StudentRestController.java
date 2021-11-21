@@ -22,11 +22,14 @@ public class StudentRestController {
     private IStudentService studentService;
 
     @GetMapping("")
-    public ResponseEntity<?> getAllStudents() throws Exception {
+    public ResponseEntity<?> getAllStudents(
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "5") Integer pageSize,
+            @RequestParam(defaultValue = "studentCode") String sortBy) throws Exception {
         try {
-            return new ResponseEntity<>(studentService.getAll(), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(studentService.getAll(pageNo,pageSize, sortBy), HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            return new ResponseEntity<>(studentService.getAll(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(studentService.getAll(pageNo,pageSize, sortBy), HttpStatus.NOT_FOUND);
         }
     }
 

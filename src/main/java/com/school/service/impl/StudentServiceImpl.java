@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.UUID;
 
 @NoArgsConstructor
 @Service
@@ -22,17 +21,16 @@ public class StudentServiceImpl implements IStudentService {
     @Override
     public Object create(StudentDto student) {
 
-        int code = UUID.randomUUID().hashCode();
         String[] passwordEncoded = encryptPassword(student.getPassword());
-        StudentModel studentModel = new StudentModel(student, code, passwordEncoded[0], passwordEncoded[1]);
+        StudentModel studentModel = new StudentModel(student, passwordEncoded[0], passwordEncoded[1]);
         studentPersistence.createStudent(studentModel);
         return studentModel;
     }
 
     @Override
-    public Collection getAll() {
+    public Collection getAll(int pageNo, int pageSize, String sortBy) {
 
-        return studentPersistence.getAllStudents();
+        return studentPersistence.getAllStudents(pageNo, pageSize, sortBy);
     }
 
     @Override

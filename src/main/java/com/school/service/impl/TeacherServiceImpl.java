@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.UUID;
 
 @NoArgsConstructor
 @Service
@@ -22,14 +21,14 @@ public class TeacherServiceImpl implements ITeacherService {
 
     @Override
     public Object create(TeacherDto teacher) {
-        int code = UUID.randomUUID().hashCode();
-        TeacherModel teacherModel= new TeacherModel(teacher, code);
+        TeacherModel teacherModel= new TeacherModel(teacher);
         return  teacherPersistence.create(teacherModel);
     }
 
     @Override
-    public Collection getAll() {
-        return teacherPersistence.getAll();
+    public Collection getAll(int pageNo, int pageSize, String sortBy) {
+
+        return teacherPersistence.getAll(pageNo,pageSize, sortBy);
     }
 
     @Override

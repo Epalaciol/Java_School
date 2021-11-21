@@ -8,7 +8,7 @@ public interface IStudentPersistence<T> {
 
     T  createStudent(StudentModel student);
 
-    Collection<T> getAllStudents();
+    Collection<T> getAllStudents(int pageNo, int pageSize, String sortBy);
 
     T getStudentByCode(int studentCode);
 

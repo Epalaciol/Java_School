@@ -16,6 +16,10 @@ public class PasswordUtils {
     private static final int ITERATIONS = 10000;
     private static final int KEY_LENGTH = 256;
 
+    private PasswordUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static String getSalt(int length) {
         StringBuilder returnValue = new StringBuilder(length);
         for (int i = 0; i < length; i++) {

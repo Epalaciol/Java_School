@@ -8,7 +8,7 @@ public interface IGroupService<T> {
 
     T create(GroupDto group);
 
-    Collection<T> getAll();
+    Collection<T> getAll(int pageNo, int pageSize, String sortBy);
 
     T getByCode(int groupCode);
 

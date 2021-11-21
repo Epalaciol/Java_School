@@ -5,6 +5,9 @@ import com.school.persistence.IStudentPersistence;
 import com.school.persistence.repository.IStudentRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -26,14 +29,16 @@ public class StudentPersistenceImpl implements IStudentPersistence {
     }
 
     @Override
-    public Collection getAllStudents() {
+    public Collection getAllStudents(int pageNo, int pageSize, String sortBy) {
+
+        Pageable paging = (Pageable) PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
         try {
             if (studentRepository.count() > 0)
-                return studentRepository.findAll();
+                return studentRepository.findAll(paging).getContent();
         } catch (Exception e) {
             throw new UnsupportedOperationException("Not supported yet");
         }
-        return studentRepository.findAll();
+        return studentRepository.findAll(paging).getContent();
     }
 
     @Override

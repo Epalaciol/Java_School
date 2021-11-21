@@ -36,7 +36,6 @@ public class GroupModel {
 
     public GroupModel(GroupDto groupDto){
 
-
         this.date = groupDto.getDate();
         this.hour = groupDto.getHour();
     }

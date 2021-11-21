@@ -5,9 +5,14 @@ import com.school.persistence.ICoursePersistence;
 import com.school.persistence.repository.ICourseRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
+//import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 @NoArgsConstructor
@@ -26,14 +31,16 @@ public class CoursePersistenceImpl implements ICoursePersistence {
     }
 
     @Override
-    public Collection getAll() {
+    public List<CourseModel> getAll(int pageNo, int pageSize, String sortBy) {
+
+        Pageable paging = (Pageable) PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
         try {
             if (courseRepository.count() > 0)
-                return courseRepository.findAll();
+                return courseRepository.findAll( paging).getContent();
         } catch (Exception e) {
             throw new UnsupportedOperationException(e.getMessage());
         }
-        return courseRepository.findAll();
+        return courseRepository.findAll(paging).getContent();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.school.controller;
 
 import com.school.dto.CourseDto;
+import com.school.model.CourseModel;
 import com.school.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Locale;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -18,11 +21,17 @@ public class CourseRestController {
     private ICourseService courseService;
 
     @GetMapping("")
-    public ResponseEntity<?> getAllCourses() throws Exception {
+    public ResponseEntity<List<CourseModel>> getAllCourses(
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "5") Integer pageSize,
+            @RequestParam(defaultValue = "courseCode") String sortBy) throws Exception {
+
         try {
-            return new ResponseEntity<>(courseService.getAll(), HttpStatus.ACCEPTED);
+            List<CourseModel> list = (List<CourseModel>) courseService.getAll(pageNo, pageSize, sortBy);
+
+            return new ResponseEntity<>(list,  HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(courseService.getAll(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
@@ -39,10 +48,14 @@ public class CourseRestController {
     }
 
     @GetMapping("/name={name}")
-    public ResponseEntity<?> getCourseByName(@PathVariable String name) {
+    public ResponseEntity<?> getCourseByName(
+            @PathVariable String name,
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(defaultValue = "courseName") String sortBy) {
 
         try {
-            Object student =  courseService.getByName(name);
+            Object student =  courseService.getByName(name.toLowerCase());
             return new ResponseEntity<>(student, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);

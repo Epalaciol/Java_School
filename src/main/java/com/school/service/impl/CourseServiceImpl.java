@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.UUID;
+import java.util.List;
 
 @NoArgsConstructor
 @Service
@@ -21,17 +21,16 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     public Object create(CourseDto course) {
 
-        int code = UUID.randomUUID().hashCode();
         course.setCourseName(
                 nameTransformation(course.getCourseName())
         );
-        CourseModel courseModel= new CourseModel(course, code);
+        CourseModel courseModel= new CourseModel(course);
         return  coursePersistence.create(courseModel);
     }
 
     @Override
-    public Collection getAll() {
-        return coursePersistence.getAll();
+    public List<CourseModel> getAll(int pageNo, int pageSize, String sortBy) {
+        return coursePersistence.getAll(pageNo,pageSize,sortBy);
     }
 
     @Override

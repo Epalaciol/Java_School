@@ -24,8 +24,7 @@ public class CourseModel {
     private String description;
 
 
-    public  CourseModel(CourseDto courseDto, int courseCode){
-        this.courseCode = courseCode;
+    public  CourseModel(CourseDto courseDto){
         this.courseName = courseDto.getCourseName();
         this.description = courseDto.getDescription();
     }
