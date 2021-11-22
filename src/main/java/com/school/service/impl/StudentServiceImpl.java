@@ -19,7 +19,7 @@ public class StudentServiceImpl implements IStudentService {
     private IStudentPersistence studentPersistence;
 
     @Override
-    public Object create(StudentDto student) {
+    public StudentModel create(StudentDto student) {
 
         String[] passwordEncoded = encryptPassword(student.getPassword());
         StudentModel studentModel = new StudentModel(student, passwordEncoded[0], passwordEncoded[1]);
@@ -28,25 +28,25 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public Collection getAll(int pageNo, int pageSize, String sortBy) {
+    public Collection<StudentModel> getAll(int pageNo, int pageSize, String sortBy) {
 
         return studentPersistence.getAllStudents(pageNo, pageSize, sortBy);
     }
 
     @Override
-    public Object getByCode(Integer studentCode) {
-        return  studentPersistence.getStudentByCode(studentCode);
+    public StudentModel getByCode(Integer studentCode) {
+        return (StudentModel) studentPersistence.getStudentByCode(studentCode);
     }
 
     @Override
-    public Object getByDocumentNumber(String documentNumber) {
-        return studentPersistence.getStudentByDocumentNumber(documentNumber);
+    public StudentModel getByDocumentNumber(String documentNumber) {
+        return (StudentModel) studentPersistence.getStudentByDocumentNumber(documentNumber);
     }
 
     @Override
     public void update(StudentDto student, int studentCode) {
 
-        StudentModel studentModel = (StudentModel) getByCode(studentCode);
+        StudentModel studentModel = getByCode(studentCode);
         StudentModel studentToChange = createStudentToUpdate(studentModel, student);
         studentPersistence.updateStudent(studentToChange);
     }

@@ -1,6 +1,7 @@
 package com.school.controller;
 
 import com.school.dto.CourseDto;
+import com.school.exception.SchoolRequestException;
 import com.school.model.CourseModel;
 import com.school.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Locale;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -24,74 +25,73 @@ public class CourseRestController {
     public ResponseEntity<List<CourseModel>> getAllCourses(
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "5") Integer pageSize,
-            @RequestParam(defaultValue = "courseCode") String sortBy) throws Exception {
+            @RequestParam(defaultValue = "courseCode") String sortBy) {
 
         try {
-            List<CourseModel> list = (List<CourseModel>) courseService.getAll(pageNo, pageSize, sortBy);
+            List<CourseModel> list = courseService.getAll(pageNo, pageSize, sortBy);
 
             return new ResponseEntity<>(list,  HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            throw new SchoolRequestException("Can not get Courses");
         }
     }
 
     @GetMapping("/code={courseCode}")
-    public ResponseEntity<?> getCourseByCode(@PathVariable int courseCode) {
+    public ResponseEntity<CourseModel> getCourseByCode(@PathVariable int courseCode) {
 
         try {
-            Object student =  courseService.getByCode(courseCode );
+            CourseModel student = (CourseModel) courseService.getByCode(courseCode );
             return new ResponseEntity<>(student, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+            throw new SchoolRequestException("Can not get Course by code");
 
         }
     }
 
     @GetMapping("/name={name}")
-    public ResponseEntity<?> getCourseByName(
+    public ResponseEntity<List<CourseModel>> getCourseByName(
             @PathVariable String name,
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "courseName") String sortBy) {
 
         try {
-            Object student =  courseService.getByName(name.toLowerCase());
-            return new ResponseEntity<>(student, HttpStatus.OK);
+            List<CourseModel> course = (List<CourseModel>) courseService.getByName(name.toLowerCase());
+            return new ResponseEntity<>(course, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+            throw new SchoolRequestException("Can not get Courses by name");
 
         }
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createTeacher(@Valid @RequestBody CourseDto courseDto) throws  Exception{
+    public ResponseEntity<String> createTeacher(@Valid @RequestBody CourseDto courseDto) {
         try {
             courseService.create(courseDto);
-            return new ResponseEntity<>("Teacher " + courseDto.getCourseName() + " create.", HttpStatus.CREATED);
+            return new ResponseEntity<>("Course " + courseDto.getCourseName() + " created.", HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>("Teacher not Created "+ e.getMessage() , HttpStatus.CONFLICT);
-
+            throw new SchoolRequestException("Course has not been created");
         }
     }
 
     @PutMapping("/{courseCode}")
-    public ResponseEntity<?> updateTeacher(@Valid @RequestBody CourseDto courseDto, @PathVariable Integer courseCode){
+    public ResponseEntity<String> updateTeacher(@Valid @RequestBody CourseDto courseDto, @PathVariable Integer courseCode){
         try {
             courseService.update(courseDto , courseCode );
-            return new ResponseEntity<>("Student " + courseDto.getCourseName() + " update.", HttpStatus.CREATED);
+            return new ResponseEntity<>("Course update.", HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+            throw new SchoolRequestException("Course has not been updated");
 
         }
     }
 
     @DeleteMapping("/code={courseCode}")
-    public ResponseEntity<?> deleteTeacherByCode(@PathVariable Integer courseCode){
+    public ResponseEntity<String> deleteTeacherByCode(@PathVariable Integer courseCode){
         try {
             courseService.deleteByCode(courseCode);
-            return new ResponseEntity<>("Student deleted", HttpStatus.CREATED);
+            return new ResponseEntity<>("Course deleted", HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+            throw new SchoolRequestException("Can not delete course");
 
         }
     }

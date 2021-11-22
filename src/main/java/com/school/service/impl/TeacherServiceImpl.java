@@ -20,25 +20,25 @@ public class TeacherServiceImpl implements ITeacherService {
 
 
     @Override
-    public Object create(TeacherDto teacher) {
+    public TeacherModel create(TeacherDto teacher) {
         TeacherModel teacherModel= new TeacherModel(teacher);
-        return  teacherPersistence.create(teacherModel);
+        return (TeacherModel) teacherPersistence.create(teacherModel);
     }
 
     @Override
-    public Collection getAll(int pageNo, int pageSize, String sortBy) {
+    public Collection<TeacherModel> getAll(int pageNo, int pageSize, String sortBy) {
 
         return teacherPersistence.getAll(pageNo,pageSize, sortBy);
     }
 
     @Override
-    public Object getByCode(Integer teacherCode) {
-        return teacherPersistence.getByCode(teacherCode);
+    public TeacherModel getByCode(Integer teacherCode) {
+        return (TeacherModel) teacherPersistence.getByCode(teacherCode);
     }
 
     @Override
-    public Object getByDocumentNumber(String documentNumber) {
-        return teacherPersistence.getByDocumentNumber(documentNumber);
+    public TeacherModel getByDocumentNumber(String documentNumber) {
+        return (TeacherModel) teacherPersistence.getByDocumentNumber(documentNumber);
     }
 
     @Override

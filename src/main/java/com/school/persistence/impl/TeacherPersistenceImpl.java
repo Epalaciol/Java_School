@@ -1,5 +1,6 @@
 package com.school.persistence.impl;
 
+import com.school.exception.SchoolRequestException;
 import com.school.model.TeacherModel;
 import com.school.persistence.ITeacherPersistence;
 import com.school.persistence.repository.ITeacherRepository;
@@ -24,7 +25,7 @@ public class TeacherPersistenceImpl implements ITeacherPersistence<TeacherModel>
         try{
             return teacherRepository.save(teacher);
         } catch (Exception e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw new SchoolRequestException(e.getMessage());
 
         }
     }
@@ -37,7 +38,7 @@ public class TeacherPersistenceImpl implements ITeacherPersistence<TeacherModel>
             if (teacherRepository.count() > 0)
                 return teacherRepository.findAll(paging).getContent();
         } catch (Exception e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw new SchoolRequestException(e.getMessage());
         }
         return teacherRepository.findAll(paging).getContent();
     }
@@ -47,7 +48,7 @@ public class TeacherPersistenceImpl implements ITeacherPersistence<TeacherModel>
         try {
             return teacherRepository.findById(teacherCode);
         } catch (Exception e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw new SchoolRequestException(e.getMessage());
         }
     }
 
@@ -56,7 +57,7 @@ public class TeacherPersistenceImpl implements ITeacherPersistence<TeacherModel>
         try {
             return teacherRepository.findBydocumentNumber(documentNumber);
         } catch (Exception e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw new SchoolRequestException(e.getMessage());
         }
     }
 
@@ -65,7 +66,7 @@ public class TeacherPersistenceImpl implements ITeacherPersistence<TeacherModel>
         try {
             teacherRepository.save(teacher);
         } catch (Exception e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw new SchoolRequestException(e.getMessage());
         }
 
     }
@@ -75,7 +76,7 @@ public class TeacherPersistenceImpl implements ITeacherPersistence<TeacherModel>
         try {
             teacherRepository.deleteById(teacherCode);
         } catch (Exception e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw new SchoolRequestException(e.getMessage());
         }
 
     }
@@ -87,7 +88,7 @@ public class TeacherPersistenceImpl implements ITeacherPersistence<TeacherModel>
 
             teacherRepository.deleteById(teacherByDocumentNumber.getTeacherCode());
         } catch (Exception e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw new SchoolRequestException(e.getMessage());
         }
 
     }

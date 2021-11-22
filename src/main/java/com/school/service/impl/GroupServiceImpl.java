@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -35,7 +36,7 @@ public class GroupServiceImpl implements IGroupService {
 
 
     @Override
-    public Object create(GroupDto group) {
+    public GroupModel create(GroupDto group) {
 
         GroupModel groupModel = assignGroupToCourse(
                 new GroupModel(group), group.getCourseCode());
@@ -43,23 +44,23 @@ public class GroupServiceImpl implements IGroupService {
         if ( groupModel.getCourse() == null)
             throw new UnsupportedOperationException("Not able to create");
 
-        return groupPersistence.create(groupModel);
+        return (GroupModel) groupPersistence.create(groupModel);
     }
 
     @Override
-    public Collection getAll(int pageNo, int pageSize, String sortBy) {
+    public Collection<GroupModel> getAll(int pageNo, int pageSize, String sortBy) {
         return groupPersistence.getAll(pageNo,pageSize,sortBy);
     }
 
     @Override
-    public Object getByCode(int groupCode) {
-        return groupPersistence.getByCode(groupCode);
+    public GroupModel getByCode(int groupCode) {
+        return (GroupModel) groupPersistence.getByCode(groupCode);
     }
 
     @Override
     public void update(GroupDto group, int groupCode) {
 
-        GroupModel groupModel = (GroupModel) getByCode(groupCode);
+        GroupModel groupModel = getByCode(groupCode);
         GroupModel groupToChange = createGroupToUpdate(groupModel, group);
         groupPersistence.update(groupToChange, groupCode);
     }
@@ -75,7 +76,7 @@ public class GroupServiceImpl implements IGroupService {
 
         try {
             TeacherModel teacherModel = (TeacherModel) teacherPersistence.getByCode(teacherCode);
-            GroupModel groupModel = (GroupModel) getByCode(groupCode);
+            GroupModel groupModel = getByCode(groupCode);
             groupModel.setTeacher(teacherModel);
             groupPersistence.update(groupModel, groupModel.getGroupCode());
         }catch (Exception e){
@@ -88,7 +89,7 @@ public class GroupServiceImpl implements IGroupService {
 
         try {
             StudentModel studentModel = (StudentModel) studentPersistence.getStudentByCode(studentCode);
-            GroupModel groupModel = (GroupModel) getByCode(groupCode);
+            GroupModel groupModel = getByCode(groupCode);
             groupModel.getStudents().add(studentModel);
             groupPersistence.update(groupModel, groupModel.getGroupCode());
         }catch (Exception e){

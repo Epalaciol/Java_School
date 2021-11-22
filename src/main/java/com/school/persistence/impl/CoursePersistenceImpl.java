@@ -1,5 +1,6 @@
 package com.school.persistence.impl;
 
+import com.school.exception.SchoolRequestException;
 import com.school.model.CourseModel;
 import com.school.persistence.ICoursePersistence;
 import com.school.persistence.repository.ICourseRepository;
@@ -9,9 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
-//import java.awt.print.Pageable;
 import org.springframework.data.domain.Pageable;
-import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -22,11 +21,11 @@ public class CoursePersistenceImpl implements ICoursePersistence {
     private ICourseRepository courseRepository;
 
     @Override
-    public Object create(CourseModel course) {
+    public CourseModel create(CourseModel course) {
         try {
             return courseRepository.save(course);
         } catch (Exception e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw new SchoolRequestException(e.getMessage());
         }
     }
 
@@ -38,26 +37,26 @@ public class CoursePersistenceImpl implements ICoursePersistence {
             if (courseRepository.count() > 0)
                 return courseRepository.findAll( paging).getContent();
         } catch (Exception e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw new SchoolRequestException(e.getMessage());
         }
         return courseRepository.findAll(paging).getContent();
     }
 
     @Override
-    public Object getByCode(int courseCode) {
+    public CourseModel getByCode(int courseCode) {
         try {
             return courseRepository.findById(courseCode);
         } catch (Exception e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw new SchoolRequestException(e.getMessage());
         }
     }
 
     @Override
-    public Collection getByName(String name) {
+    public List<CourseModel> getByName(String name) {
         try {
             return courseRepository.findByCourseNameContaining(name);
         } catch (Exception e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw new SchoolRequestException(e.getMessage());
         }
     }
 
@@ -66,7 +65,7 @@ public class CoursePersistenceImpl implements ICoursePersistence {
         try {
             courseRepository.save(course);
         } catch (Exception e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw new SchoolRequestException(e.getMessage());
         }
 
     }
@@ -76,7 +75,7 @@ public class CoursePersistenceImpl implements ICoursePersistence {
         try {
             courseRepository.deleteById(courseCode);
         } catch (Exception e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw new SchoolRequestException(e.getMessage());
         }
     }
 }

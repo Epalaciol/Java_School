@@ -1,5 +1,6 @@
 package com.school.persistence.impl;
 
+import com.school.exception.SchoolRequestException;
 import com.school.model.GroupModel;
 import com.school.persistence.IGroupPersistence;
 import com.school.persistence.repository.IGroupRepository;
@@ -20,33 +21,33 @@ public class GroupPersistenceImpl implements IGroupPersistence {
     private IGroupRepository groupRepository;
 
     @Override
-    public Object create(GroupModel group) {
+    public GroupModel create(GroupModel group) {
         try {
             return groupRepository.save(group);
         } catch (Exception e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw new SchoolRequestException(e.getMessage());
         }
     }
 
     @Override
-    public Collection getAll(int pageNo, int pageSize, String sortBy) {
+    public Collection<GroupModel> getAll(int pageNo, int pageSize, String sortBy) {
 
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
         try {
             if (groupRepository.count() > 0)
                 return groupRepository.findAll(paging).getContent();
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet");
+            throw new SchoolRequestException(e.getMessage());
         }
         return groupRepository.findAll(paging).getContent();
     }
 
     @Override
-    public Object getByCode(int groupCode) {
+    public GroupModel getByCode(int groupCode) {
         try {
             return groupRepository.findById(groupCode);
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet");
+             throw new SchoolRequestException(e.getMessage());
         }
     }
 
@@ -55,7 +56,7 @@ public class GroupPersistenceImpl implements IGroupPersistence {
         try {
             groupRepository.save(group);
         } catch (Exception e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw new SchoolRequestException(e.getMessage());
         }
     }
 
@@ -64,7 +65,7 @@ public class GroupPersistenceImpl implements IGroupPersistence {
         try {
             groupRepository.deleteById(groupCode);
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new SchoolRequestException(e.getMessage());
         }
     }
 }

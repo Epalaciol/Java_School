@@ -1,5 +1,6 @@
 package com.school.persistence.impl;
 
+import com.school.exception.SchoolRequestException;
 import com.school.model.StudentModel;
 import com.school.persistence.IStudentPersistence;
 import com.school.persistence.repository.IStudentRepository;
@@ -20,42 +21,42 @@ public class StudentPersistenceImpl implements IStudentPersistence {
     private IStudentRepository studentRepository;
 
     @Override
-    public Object createStudent(StudentModel student) {
+    public StudentModel createStudent(StudentModel student) {
         try {
             return studentRepository.save(student);
         } catch (Exception e) {
-            throw new UnsupportedOperationException(e.getMessage());
+            throw new SchoolRequestException(e.getMessage());
         }
     }
 
     @Override
-    public Collection getAllStudents(int pageNo, int pageSize, String sortBy) {
+    public Collection<StudentModel> getAllStudents(int pageNo, int pageSize, String sortBy) {
 
-        Pageable paging = (Pageable) PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
         try {
             if (studentRepository.count() > 0)
                 return studentRepository.findAll(paging).getContent();
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet");
+            throw new SchoolRequestException(e.getMessage());
         }
         return studentRepository.findAll(paging).getContent();
     }
 
     @Override
-    public Object getStudentByCode(int studentCode) {
+    public StudentModel getStudentByCode(int studentCode) {
         try {
             return studentRepository.findById(studentCode);
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet");
+            throw new SchoolRequestException(e.getMessage());
         }
     }
 
     @Override
-    public Object getStudentByDocumentNumber(String documentNumber) {
+    public StudentModel getStudentByDocumentNumber(String documentNumber) {
         try {
             return studentRepository.findBydocumentNumber(documentNumber);
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet");
+            throw new SchoolRequestException(e.getMessage());
         }
     }
 
@@ -64,7 +65,7 @@ public class StudentPersistenceImpl implements IStudentPersistence {
         try {
             studentRepository.save(student);
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new SchoolRequestException(e.getMessage());
         }
 
     }
@@ -75,7 +76,7 @@ public class StudentPersistenceImpl implements IStudentPersistence {
         try {
             studentRepository.deleteById(studentCode);
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new SchoolRequestException(e.getMessage());
         }
 
     }
@@ -84,11 +85,11 @@ public class StudentPersistenceImpl implements IStudentPersistence {
     public void deleteStudentByDocumentNumber(String documentNumber) {
 
         try {
-            StudentModel studentByDocumentNumber = (StudentModel) getStudentByDocumentNumber(documentNumber);
+            StudentModel studentByDocumentNumber =  getStudentByDocumentNumber(documentNumber);
 
             studentRepository.deleteById(studentByDocumentNumber.getStudentCode());
         } catch (Exception e) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new SchoolRequestException(e.getMessage());
         }
 
     }

@@ -34,19 +34,19 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public Object getByCode(Integer courseCode) {
-        return coursePersistence.getByCode(courseCode);
+    public CourseModel getByCode(Integer courseCode) {
+        return (CourseModel) coursePersistence.getByCode(courseCode);
     }
 
     @Override
-    public Collection getByName(String name) {
+    public Collection<CourseModel> getByName(String name) {
         return coursePersistence.getByName(name);
     }
 
     @Override
     public void update(CourseDto course, int courseCode) {
 
-        CourseModel courseModel = (CourseModel) getByCode(courseCode);
+        CourseModel courseModel =  getByCode(courseCode);
         CourseModel courseToChange = createCourseToUpdate(courseModel, course);
         coursePersistence.update(courseToChange, courseCode);
     }
